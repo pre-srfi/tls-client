@@ -100,6 +100,8 @@ implementation.
 
 Recognizes at least the following options:
 
+**network-interface** string, or `#f` for default
+
 **allowed-ip-versions** `4` or `6`, or `#f` for both.
 
 Whether to allow connections over IPv4 and/or IPv6.
@@ -109,8 +111,6 @@ Whether to allow connections over IPv4 and/or IPv6.
 `'("1.3")`
 
 **allowed-tls-chipers** string list
-
-**network-interface** string, or `#f` for default
 
 **client-certificate-filename** string, or `#f` for none
 
