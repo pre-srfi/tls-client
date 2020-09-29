@@ -84,7 +84,8 @@ Ideally, the API should support sending client certificates.
 
 (**tls-version-list**) -> string list
 
-Return a list of all TLS/SSL versions supported by the implementation.
+Return a list of all TLS/SSL protocol versions supported by the
+implementation.
 
 Sorted from older to newer. [What does this mean precisely?]
 
@@ -99,10 +100,9 @@ implementation.
 
 Recognizes at least the following options:
 
-**allowed-ip-versions** `4` or `6`
+**allowed-ip-versions** `4` or `6`, or `#f` for both.
 
-Whether to allow connections over IPv4, IPv6, or either. Default is
-either.
+Whether to allow connections over IPv4 and/or IPv6.
 
 **allowed-tls-versions** string list
 
@@ -110,11 +110,11 @@ either.
 
 **allowed-tls-chipers** string list
 
-**network-interface** string
+**network-interface** string, or `#f` for default
 
-**check-remote-certificate** `#t` or `#f`
+**check-server-certificate** `#t` or `#f`
 
-**check-remote-certificate-stapling** `#t` or `#f`
+**check-server-certificate-stapling** `#t` or `#f`
 
 # Implementation
 
