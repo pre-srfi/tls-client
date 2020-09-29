@@ -112,6 +112,10 @@ Whether to allow connections over IPv4 and/or IPv6.
 
 **network-interface** string, or `#f` for default
 
+**client-certificate-filename** string, or `#f` for none
+
+**client-certificate-password** string, or `#f` for none
+
 **check-server-certificate** `#t` or `#f`
 
 **check-server-certificate-stapling** `#t` or `#f`
