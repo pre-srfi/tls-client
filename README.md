@@ -8,54 +8,124 @@ Early Draft
 
 # Abstract
 
-??? abstract, preferably shorter than 200 words. Please outline the
-need for, and design of, the proposal.
+This SRFI provides procedures to make TLS (formerly known as SSL)
+client connections. A TLS connection is essentially a bidirectional,
+encrypted pipe over which arbitrary binary data can be sent.
 
 # Issues
 
-??? Optional section that may point out things to be resolved. This
-will not appear in the final SRFI.
+One crucial requirement for such an API is to provide a way to do
+server certificate verification, or to specify how it should be done
+by the underlying software. Clients that don't check servers'
+certificates are surprisingly common, and put their users at risk. I
+encountered another such unfixed project just yesterday.
+
+Another requirement is to allow control of exactly what crypto
+algorithms and TLS/SSL versions will be accepted. There are well-known
+vulnerabilities in earlier versions, and it's important that users who
+want to can avoid accepting connections using those versions.
+
+Ideally, the API should support sending client certificates.
 
 # Rationale
 
-??? detailed rationale. This should be 200-500 words long. Please
-explain why the proposal should be incorporated as a standard feature
-in Scheme implementations. List related standards and SRFIs, including
-dependencies, conflicts, and replacements. If there are other
-standards which this proposal will replace or with which it will
-compete, please explain why the present proposal is a substantial
-improvement.
+## Survey of TLS implementations in C
 
-## Survey of prior art
+* [OpenSSL](https://www.openssl.org) /
+  [LibreSSL](https://www.libressl.org) /
+  [BoringSSL](https://github.com/google/boringssl)
 
-GitHub's version of Markdown can make tables. For example:
+* [Mbed TLS](https://github.com/ARMmbed/mbedtls)
 
-| System        | Procedure | Signature                 |
-| ------------- |:---------:| ------------------------- |
-| System A      | `jumble`  | _list_ _elem_             |
-| System B      | `bungle`  | _elem_ _list_             |
-| System C      | `frob`    | _list_ _elem_ _predicate_ |
+* [axTLS](http://axtls.sourceforge.net/)
+
+* [GnuTLS](https://www.gnu.org/software/gnutls/)
+
+* [WolfSSL](https://www.wolfssl.com/)
+
+* [Google Tink](https://github.com/google/tink)
+
+* [Amazon s2n](https://github.com/awslabs/s2n)
+
+* [Mozilla Network Security Services (NSS)](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS)
+
+* [Microsoft Secure Channel (Schannel)](https://docs.microsoft.com/en-us/windows/win32/secauthn/secure-channel)
+
+* [Apple Secure Transport](https://developer.apple.com/documentation/security/secure_transport)
+
+## Survey of TLS implementations in Java/C#
+
+* [Bouncy Castle](https://bouncycastle.org/)
+
+* [Java Secure Socket Extension (JSSE)](https://docs.oracle.com/javase/9/security/java-secure-socket-extension-jsse-reference-guide.htm)
+
+## Survey of existing Scheme TLS interfaces
+
+* Chibi-Scheme -- `(chibi ssl)` -- Basic bindings for establishing SSL connections -- http://snow-fort.org/s/gmail.com/alexshinn/chibi/ssl/0.1/
+
+* Chicken -- `openssl` -- Bindings to the OpenSSL SSL/TLS library -- https://wiki.call-cc.org/eggref/5/openssl
+
+* Chicken -- `TerribleTLS` -- Inadvisible pure-Scheme TLS client -- https://akkuscm.org/packages/TerribleTLS/
+
+* Gambit -- (make-tls-context [options]) http://www.iro.umontreal.ca/~gambit/doc/gambit.html#Network-devices
+
+* Gauche
+
+* Guile -- `gnutls`
 
 # Specification
 
-??? detailed specification. This should be detailed enough that a
-conforming implementation could be completely created from this
-description.
+## Get information
+
+(**tls-implementation-name**) -> string
+
+(**tls-implementation-version**) -> string
+
+(**tls-version-list**) -> string list
+
+Return a list of all TLS/SSL versions supported by the implementation.
+
+Sorted from older to newer. [What does this mean precisely?]
+
+(**tls-cipher-list**) -> string list
+
+Returns a list of all cipher algorithms supported by the
+implementation.
+
+## Open connection
+
+(**tls-open** _host_ _port_ _options_) -> port
+
+Recognizes at least the following options:
+
+**allowed-ip-versions** `4` or `6`
+
+Whether to allow connections over IPv4, IPv6, or either. Default is
+either.
+
+**allowed-tls-versions** string list
+
+`'("1.3")`
+
+**allowed-tls-chipers** string list
+
+**network-interface** string
+
+**check-remote-certificate** `#t` or `#f`
+
+**check-remote-certificate-stapling** `#t` or `#f`
 
 # Implementation
 
-??? explanation of how it meets the sample implementation requirement
-(see process), and the code, if possible, or a link to it Source for
-the sample implementation.
-
 # Acknowledgements
 
-??? Give credits where credits is due.
+Arthur Gleckler suggested the features to send client certificates,
+force server certificate verification, and select algorithms and TLS
+versions.
+
+The SSL options were inspired by the `curl` program.
 
 # References
-
-??? Optional section with links to web pages, books and papers that
-helped design the SRFI.
 
 # Copyright
 
