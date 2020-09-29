@@ -1,4 +1,4 @@
-# SRFI nnn: Title
+# SRFI nnn: TLS client
 
 by Firstname Lastname, Another Person, Third Person
 
@@ -8,9 +8,10 @@ Early Draft
 
 # Abstract
 
-This SRFI provides procedures to make TLS (formerly known as SSL)
-client connections. A TLS connection is essentially a bidirectional,
-encrypted pipe over which arbitrary binary data can be sent.
+This SRFI lets users make connections to Transport Layer Security
+(TLS) servers. A TLS connection is essentially a bidirectional,
+encrypted pipe over which arbitrary binary data can be sent. TLS was
+formerly known as Secure Sockets Layer (SSL).
 
 # Issues
 
