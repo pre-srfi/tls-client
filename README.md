@@ -42,6 +42,8 @@ Ideally, the API should support sending client certificates.
 
 * [GnuTLS](https://www.gnu.org/software/gnutls/)
 
+* [BearSSL](https://bearssl.org)
+
 * [WolfSSL](https://www.wolfssl.com/)
 
 * [Google Tink](https://github.com/google/tink)
